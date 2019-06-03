@@ -1,17 +1,48 @@
 import React from "react";
-import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button } from "shards-react";
+import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react";
+import endpoints from '../endpoints'
+import axios from 'axios'
+
 class Login extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
-      allTasks: [],
-      tasks: [],
-      view: 'today'
+      email: '',
+      password: '',
+      error: false,
+      errorMsg: '',
+      loading: false
+    }
+    this.onLogin = this.onLogin.bind(this)
+  }
+
+  async onLogin() {
+    const { email, password } = this.state
+
+    const loginUrl = endpoints.login
+    const postData = {
+      email: email,
+      password: password
+    }
+    const result = await axios.post(loginUrl, postData)
+    if(result.status === 200 && result.data.status) {
+      localStorage.setItem('access_token', result.data.access_token);
+      this.props.history.push(`/task`)
+    } else {
+      this.setState({
+        error: true,
+        errorMsg: result.data.message
+      })
     }
   }
 
+  onInputChange(e, field) {
+    this.setState({ [field]: e.target.value })
+  }
+
   render() {
+    const { email, password, error, errorMsg } = this.state
     return (
       <Container>
         <br/><br/><br/>
@@ -23,17 +54,21 @@ class Login extends React.Component {
                 <CardTitle className='text-center pb-4'>mileStone Login</CardTitle>
                 <Form>
                  <FormGroup>
-                   <label htmlFor="username">Username</label>
-                   <FormInput id="username" placeholder="Username" />
+                   <label htmlFor="username">Email</label>
+                   <FormInput value={email} onChange={e => this.onInputChange(e, 'email')} id="email" placeholder="Email" />
                  </FormGroup>
                  <FormGroup>
                    <label htmlFor="password">Password</label>
-                   <FormInput type="password" id="#password" placeholder="Password" />
+                   <FormInput value={password} type="password" onChange={e => this.onInputChange(e, 'password')} id="password" placeholder="Password" />
                  </FormGroup>
                  <FormGroup>
-                   <Button>Login</Button>
+                   <Button onClick={this.onLogin}>Login</Button>
                  </FormGroup>
                </Form>
+               { error && <Alert theme='danger'>
+                  Error - {errorMsg}
+                </Alert>
+              }
               </CardBody>
             </Card>
             </Col>
