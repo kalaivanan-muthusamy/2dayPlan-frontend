@@ -5,13 +5,7 @@ import { Redirect } from "react-router-dom";
 import { DefaultLayout, LoginLayout } from "./layouts";
 
 // Route Views
-import BlogOverview from "./views/BlogOverview";
-import UserProfileLite from "./views/UserProfileLite";
-import AddNewPost from "./views/AddNewPost";
-import Errors from "./views/Errors";
-import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
-import BlogPosts from "./views/BlogPosts";
+import ComingSoon from "./views/ComingSoon";
 import Task from "./views/Task";
 import Login from "./views/Login";
 
@@ -34,38 +28,18 @@ export default [
     component: Task
   },
   {
-    path: "/blog-overview",
+    path: "/calender",
     layout: DefaultLayout,
-    component: BlogOverview
+    component: ComingSoon
   },
   {
-    path: "/user-profile-lite",
+    path: "/contacts",
     layout: DefaultLayout,
-    component: UserProfileLite
+    component: ComingSoon
   },
   {
-    path: "/add-new-post",
+    path: "/profile",
     layout: DefaultLayout,
-    component: AddNewPost
-  },
-  {
-    path: "/errors",
-    layout: DefaultLayout,
-    component: Errors
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    component: Tables
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
+    component: ComingSoon
   }
 ];

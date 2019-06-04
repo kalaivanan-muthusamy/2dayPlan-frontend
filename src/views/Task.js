@@ -17,16 +17,14 @@ import {
   ModalHeader,
   Form,
   FormGroup,
-  FormInput
+  FormInput,
+  DatePicker
 } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
-import UsersByDevice from "./../components/task/UsersByDevice";
 import axios from 'axios'
 import moment from 'moment'
 import endpoints from '../endpoints'
-const handleChange = (e, task) => {
 
-}
 
 class Task extends React.Component {
 
@@ -37,9 +35,14 @@ class Task extends React.Component {
       tasks: [],
       view: 'today',
       addTaskModalOpen: false,
+      editTaskModelOpen: false,
       newTask: {
         task_details: '',
         target_date: moment().format('YYYY-MM-DD')
+      },
+      editTask: {
+        task_details: '',
+        target_date: ''
       }
     }
   }
@@ -95,9 +98,41 @@ class Task extends React.Component {
     this.setState({ newTask: { ...this.state.newTask, [field]: e.target.value }})
   }
 
+  onEditInputChange(e, field) {
+    let val = ''
+    if(field === 'target_date'){
+      val = e
+    } else {
+      val = e.target.value
+    }
+    this.setState({ editTask: { ...this.state.editTask, [field]: val }})
+  }
+
+  async handleStatusChange(e, task) {
+    try {
+      const update = {
+        status: !task.status,
+        task_id: task._id
+      }
+      const access_token = localStorage.getItem('access_token') || '';
+      const response = await axios.post(endpoints.updateTask, update, { headers: { Authorization: `Token ${access_token}`} })
+      if(response.status === 200 && response.data.status) {
+        this.props.history.push('/task')
+      } else if(response.status === 401) {
+        this.props.history.push('/login')
+      } else {
+        alert('Failed')
+      }
+    } catch (error) {
+      const response = error.response || {}
+      if(response.status === 401) {
+        this.props.history.push('/login')
+      }
+    }
+  }
+
   async onSubmit() {
     const { newTask } = this.state
-    console.log(newTask);
     try {
         const access_token = localStorage.getItem('access_token') || '';
         const response = await axios.post(endpoints.addTask, newTask, { headers: { Authorization: `Token ${access_token}`} })
@@ -119,12 +154,46 @@ class Task extends React.Component {
     }
   }
 
-  toggleAddTaskModel() {
-    this.setState({ addTaskModalOpen: !this.state.addTaskModalOpen })
+  toggleModel(model) {
+    console.log('model', model);
+    this.setState({ [model]: !this.state[model] })
+  }
+
+  onEdit(task) {
+    this.toggleModel('editTaskModelOpen')
+    this.setState({ editTask: task })
+    console.log(task);
+  }
+
+  async onTaskUpdate() {
+    const { editTask } = this.state
+
+    try {
+        const newData = {
+          task_details: editTask.task_details,
+          target_date: moment(editTask.target_date).format(),
+          task_id: editTask._id
+        }
+        console.log('newData',newData);
+        const access_token = localStorage.getItem('access_token') || '';
+        const response = await axios.post(endpoints.updateTask, newData, { headers: { Authorization: `Token ${access_token}`} })
+        if(response.status === 200 && response.data.status) {
+          this.props.history.push('/task')
+        } else if(response.status === 401) {
+          this.props.history.push('/login')
+        } else {
+          alert('Failed')
+        }
+    } catch (error) {
+      const response = error.response
+      if(response.status === 401) {
+        this.props.history.push('/login')
+      }
+    }
   }
 
   render() {
-    const { tasks, view, addTaskModalOpen, newTask } = this.state
+    const { tasks, view, addTaskModalOpen, editTaskModelOpen, newTask, editTask } = this.state
     return (
       <Container fluid className="main-content-container px-4 pb-4">
         {/* Page Header */}
@@ -133,7 +202,7 @@ class Task extends React.Component {
         </Row>
 
         <Row noGutters className="page-header py-4">
-          <Col lg="9" md="12">
+          <Col>
             <ButtonToolbar>
               <InputGroup size="sm" >
                 <Button  onClick={() => this.newTask()} outline={view === 'thisMonth' ? null : true } >New Task</Button>
@@ -150,18 +219,19 @@ class Task extends React.Component {
 
         <Row>
           {/* Editor */}
-          <Col lg="9" md="12">
+          <Col>
             {tasks.map(task => (
               <Card key={task._id} small className="mb-3">
                 <CardHeader className="border-bottom">
-                  <h6 className="m-0">{task.task_details}</h6>
+                  <h6 className="m-0 d-inline">{task.task_details} </h6>
+                  <a className='ml-2 text-secondary' href="#" onClick={() => this.onEdit(task)}><i className='material-icons'>edit</i></a>
                 </CardHeader>
                 <CardBody>
                   <Row>
                     <Col>
                       <FormCheckbox
                       checked={task.status}
-                      onChange={e => handleChange(e, task)}
+                      onChange={e => this.handleStatusChange(e, task)}
                       >
                         Completed
                       </FormCheckbox>
@@ -173,15 +243,9 @@ class Task extends React.Component {
                 </CardBody>
               </Card>
             ))}
-            {/*<Editor />*/}
-          </Col>
-
-          {/* Sidebar Widgets */}
-          <Col lg="3" md="12">
-            <UsersByDevice />
           </Col>
         </Row>
-        <Modal open={addTaskModalOpen} toggle={() => this.toggleAddTaskModel()}>
+        <Modal open={addTaskModalOpen} toggle={() => this.toggleModel('addTaskModalOpen')}>
           <ModalHeader>Add New Task</ModalHeader>
           <ModalBody>
             <Form>
@@ -194,6 +258,31 @@ class Task extends React.Component {
                 <FormInput value={newTask.target_date} onChange={e => this.onInputChange(e, 'target_date')} type="text" id="targetDate" placeholder="Target Date" />
               </FormGroup>
               <Button type='button' onClick={() => this.onSubmit()}>Submit</Button>
+            </Form>
+          </ModalBody>
+        </Modal>
+        <Modal open={editTaskModelOpen} toggle={() => this.toggleModel('editTaskModelOpen')}>
+          <ModalHeader>Update Task</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup>
+                <label htmlFor="task">Task</label>
+                <FormInput value={editTask.task_details} onChange={e => this.onEditInputChange(e, 'task_details')} id="task" placeholder="Task Details" />
+              </FormGroup>
+              <FormGroup>
+                <label htmlFor="targetDate">Target Date</label>
+                <br/>
+                <DatePicker
+                  className="form-control"
+                  id="targetDate"
+                  selected={moment(editTask.target_date).toDate()}
+                  dateFormat="dd-MM-yyyy"
+                  onChange={(e) => this.onEditInputChange(e, 'target_date')}
+                  placeholderText="End Date"
+                  dropdownMode="select"
+                />
+              </FormGroup>
+              <Button type='button' onClick={() => this.onTaskUpdate()}>Submit</Button>
             </Form>
           </ModalBody>
         </Modal>

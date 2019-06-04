@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react";
 import endpoints from '../endpoints'
 import axios from 'axios'
+import logo from '../images/mileStone-logo.svg'
 
 class Login extends React.Component {
 
@@ -28,6 +29,7 @@ class Login extends React.Component {
     const result = await axios.post(loginUrl, postData)
     if(result.status === 200 && result.data.status) {
       localStorage.setItem('access_token', result.data.access_token);
+      console.warn('login history', this.props.history);
       this.props.history.push(`/task`)
     } else {
       this.setState({
@@ -51,7 +53,15 @@ class Login extends React.Component {
           <Col sm={{size: 5, offset: 3}}>
             <Card>
               <CardBody>
-                <CardTitle className='text-center pb-4'>mileStone Login</CardTitle>
+                <CardTitle className='text-center pb-4'>
+                {<img
+                  id="main-logo"
+                  className="d-inline-block align-top mr-2"
+                  style={{ maxWidth: "30px" }}
+                  src={logo}
+                  alt="Shards Dashboard"
+                />}
+                mileStone Login</CardTitle>
                 <Form>
                  <FormGroup>
                    <label htmlFor="username">Email</label>

@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 import { Navbar, NavbarBrand } from "shards-react";
 
 import { Dispatcher, Constants } from "../../../flux";
-
+import logo from '../../../images/mileStone-logo.svg'
 class SidebarMainNavbar extends React.Component {
   constructor(props) {
     super(props);
-
     this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
   }
 
@@ -31,13 +30,13 @@ class SidebarMainNavbar extends React.Component {
             style={{ lineHeight: "25px" }}
           >
             <div className="d-table m-auto">
-              {/*<img
+              {<img
                 id="main-logo"
                 className="d-inline-block align-top mr-1"
                 style={{ maxWidth: "25px" }}
-                src={require("../../../images/shards-dashboards-logo.svg")}
+                src={logo}
                 alt="Shards Dashboard"
-              />*/}
+              />}
               {!hideLogoText && (
                 <span className="d-none d-md-inline ml-1">
                   mileStone Tasker
