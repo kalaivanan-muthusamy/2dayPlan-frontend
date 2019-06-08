@@ -1,10 +1,10 @@
 const server = 'http://localhost:8001'
 
 const endpoints = {
-  login: `${server}/login`,
-  allTask: `${server}/tasks/all`,
-  addTask: `${server}/tasks/add`,
-  updateTask: `${server}/tasks/update`
+  login: `${server}/users/login`,
+  allTask: `${server}/tasks`,
+  addTask: `${server}/tasks`,
+  updateTask: `${server}/tasks`
 }
 
 export default endpoints
