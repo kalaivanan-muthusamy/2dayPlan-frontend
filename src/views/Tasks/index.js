@@ -3,11 +3,6 @@ import {
   Container,
   Row,
   Col,
-  Card,
-  CardHeader,
-  CardBody,
-  FormCheckbox,
-  Badge,
   ButtonToolbar,
   ButtonGroup,
   Button,
@@ -20,13 +15,14 @@ import {
   FormInput,
   DatePicker
 } from "shards-react";
-import PageTitle from "../components/common/PageTitle";
+import PageTitle from "../../components/common/PageTitle";
+import Task from './Task'
 import axios from 'axios'
 import moment from 'moment'
-import endpoints from '../endpoints'
+import endpoints from '../../endpoints'
 
 
-class Task extends React.Component {
+class Tasks extends React.Component {
 
   constructor(props){
     super(props)
@@ -45,6 +41,8 @@ class Task extends React.Component {
         target_date: ''
       }
     }
+
+    this.onEditClick = this.onEditClick.bind(this)
   }
 
   async componentDidMount() {
@@ -114,21 +112,22 @@ class Task extends React.Component {
     this.setState({ editTask: { ...this.state.editTask, [field]: val }})
   }
 
-  async handleStatusChange(e, task) {
+  async onStatusChange(e, task_id, status) {
     try {
       const update = {
-        status: !task.status,
-        task_id: task._id
+        status: status,
+        task_id: task_id
       }
       const access_token = localStorage.getItem('access_token') || '';
       const response = await axios.put(endpoints.updateTask, update, { headers: { Authorization: access_token }})
       if(response.status === 200 && response.data.status) {
-        this.props.history.push('/task')
+        this.props.history.push('/tasks')
       } else if(response.status === 401) {
         this.props.history.push('/login')
       } else {
         alert('Failed')
       }
+      return true
     } catch (error) {
       const response = error.response || {}
       if(response.status === 401) {
@@ -165,26 +164,23 @@ class Task extends React.Component {
     this.setState({ [model]: !this.state[model] })
   }
 
-  onEdit(task) {
+  onEditClick(task) {
     this.toggleModel('editTaskModelOpen')
     this.setState({ editTask: task })
-    console.log(task);
   }
 
   async onTaskUpdate() {
     const { editTask } = this.state
-
     try {
         const newData = {
           task_details: editTask.task_details,
           target_date: moment(editTask.target_date).format(),
           task_id: editTask._id
         }
-        console.log('newData',newData);
         const access_token = localStorage.getItem('access_token') || '';
         const response = await axios.put(endpoints.updateTask, newData, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
-          this.props.history.push('/task')
+          this.props.history.push('/tasks')
         } else if(response.status === 401) {
           this.props.history.push('/login')
         } else {
@@ -211,7 +207,7 @@ class Task extends React.Component {
           <Col>
             <ButtonToolbar>
               <InputGroup size="sm" >
-                <Button  onClick={() => this.newTask()} outline={view === 'thisMonth' ? null : true } >New Task</Button>
+                <Button  onClick={() => this.newTask()} outline>New Task</Button>
               </InputGroup>
               <ButtonGroup size="sm" className="ml-auto mr-2">
                 <Button onClick={() => this.onViewChange('all')} outline={view === 'all' ? null : true } > All</Button>
@@ -224,31 +220,15 @@ class Task extends React.Component {
         </Row>
 
         <Row>
-          {/* Editor */}
           <Col>
-            {tasks.map(task => (
-              <Card key={task._id} small className="mb-3">
-                <CardHeader className="border-bottom">
-                  <h6 className="m-0 d-inline">{task.task_details} </h6>
-                  <a className='ml-2 text-secondary' style={{ opacity: .5 }} href="#" onClick={() => this.onEdit(task)}><i className='material-icons'>edit</i></a>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col>
-                      <FormCheckbox
-                      checked={task.status}
-                      onChange={e => this.handleStatusChange(e, task)}
-                      >
-                        Completed
-                      </FormCheckbox>
-                    </Col>
-                    <Col className='text-right'>
-                      <Badge theme="secondary">Target Date: {moment(task.target_date).format('DD-MM-YYYY')}</Badge>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            ))}
+            {tasks && tasks.map(task => {
+              return (<Task
+                key={task._id}
+                task={task}
+                onEditClick={this.onEditClick}
+                onStatusChange={this.onStatusChange}
+              />)
+            })}
           </Col>
         </Row>
         <Modal open={addTaskModalOpen} toggle={() => this.toggleModel('addTaskModalOpen')}>
@@ -306,4 +286,4 @@ class Task extends React.Component {
 
 }
 
-export default Task;
+export default Tasks;

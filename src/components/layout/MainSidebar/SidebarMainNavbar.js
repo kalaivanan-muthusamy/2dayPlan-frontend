@@ -4,9 +4,6 @@ import { Navbar, NavbarBrand } from "shards-react";
 import logo from '../../../images/mileStone-logo.svg'
 
 class SidebarMainNavbar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const { hideLogoText } = this.props;

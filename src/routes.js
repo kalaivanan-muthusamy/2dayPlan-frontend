@@ -6,7 +6,7 @@ import { DefaultLayout, LoginLayout } from "./layouts";
 
 // Route Views
 import ComingSoon from "./views/ComingSoon";
-import Task from "./views/Task";
+import Tasks from "./views/Tasks";
 import Login from "./views/Login";
 
 
@@ -23,9 +23,9 @@ export default [
     component: Login
   },
   {
-    path: "/task",
+    path: "/tasks",
     layout: DefaultLayout,
-    component: Task
+    component: Tasks
   },
   {
     path: "/calender",
