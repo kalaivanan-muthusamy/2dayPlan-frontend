@@ -95,7 +95,13 @@ class Task extends React.Component {
   }
 
   onInputChange(e, field) {
-    this.setState({ newTask: { ...this.state.newTask, [field]: e.target.value }})
+    let val = ''
+    if(field === 'target_date'){
+      val = e
+    } else {
+      val = e.target.value
+    }
+    this.setState({ newTask: { ...this.state.newTask, [field]: val }})
   }
 
   onEditInputChange(e, field) {
@@ -224,7 +230,7 @@ class Task extends React.Component {
               <Card key={task._id} small className="mb-3">
                 <CardHeader className="border-bottom">
                   <h6 className="m-0 d-inline">{task.task_details} </h6>
-                  <a className='ml-2 text-secondary' href="#" onClick={() => this.onEdit(task)}><i className='material-icons'>edit</i></a>
+                  <a className='ml-2 text-secondary' style={{ opacity: .5 }} href="#" onClick={() => this.onEdit(task)}><i className='material-icons'>edit</i></a>
                 </CardHeader>
                 <CardBody>
                   <Row>
@@ -255,7 +261,15 @@ class Task extends React.Component {
               </FormGroup>
               <FormGroup>
                 <label htmlFor="targetDate">Target Date</label>
-                <FormInput value={newTask.target_date} onChange={e => this.onInputChange(e, 'target_date')} type="text" id="targetDate" placeholder="Target Date" />
+                <DatePicker
+                  className="form-control"
+                  id="targetDate"
+                  selected={moment(newTask.target_date).toDate()}
+                  dateFormat="dd-MM-yyyy"
+                  onChange={(e) => this.onInputChange(e, 'target_date')}
+                  placeholderText="Target Date"
+                  dropdownMode="select"
+                />
               </FormGroup>
               <Button type='button' onClick={() => this.onSubmit()}>Submit</Button>
             </Form>
@@ -278,7 +292,7 @@ class Task extends React.Component {
                   selected={moment(editTask.target_date).toDate()}
                   dateFormat="dd-MM-yyyy"
                   onChange={(e) => this.onEditInputChange(e, 'target_date')}
-                  placeholderText="End Date"
+                  placeholderText="Target Date"
                   dropdownMode="select"
                 />
               </FormGroup>
