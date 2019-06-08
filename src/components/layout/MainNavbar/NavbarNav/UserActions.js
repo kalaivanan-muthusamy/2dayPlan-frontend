@@ -30,20 +30,14 @@ class UserActions extends React.Component {
 
   onLogout() {
     localStorage.removeItem('access_token')
-    console.warn('login history', this.props.history);
     this.props.history.push('/login')
   }
 
   render() {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
-        <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
-          <img
-            className="user-avatar rounded-circle mr-2"
-            src={require("./../../../../images/avatars/1.jpg")}
-            alt="User Avatar"
-          />{" "}
-          <span className="d-none d-md-inline-block">Kalaivanan Muthusamy</span>
+        <DropdownToggle caret tag={NavLink} className="text-nowrap p-3">
+          <span style={{ cursor: 'pointer' }} className="d-none d-md-inline-block">Kalaivanan Muthusamy</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="profile">

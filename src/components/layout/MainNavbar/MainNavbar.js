@@ -22,17 +22,11 @@ const MainNavbar = ({ layout, stickyTop }) => {
         </Navbar>
       </div>
     </div>
-  );
-};
+  )
+}
 
 MainNavbar.propTypes = {
-  /**
-   * The layout type where the MainNavbar is used.
-   */
   layout: PropTypes.string,
-  /**
-   * Whether the main navbar is sticky to the top, or not.
-   */
   stickyTop: PropTypes.bool
 };
 

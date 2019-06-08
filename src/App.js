@@ -8,7 +8,7 @@ import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 import "./assets/custom.css";
 
 export default () => (
-  <Router forceRefresh={true} basename={process.env.REACT_APP_BASENAME || ""}>
+  <Router basename={process.env.REACT_APP_BASENAME || ""}>
     <div>
       {routes.map((route, index) => {
         return (

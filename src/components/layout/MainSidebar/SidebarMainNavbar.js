@@ -1,19 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Navbar, NavbarBrand } from "shards-react";
-
-import { Dispatcher, Constants } from "../../../flux";
 import logo from '../../../images/mileStone-logo.svg'
+
 class SidebarMainNavbar extends React.Component {
   constructor(props) {
     super(props);
-    this.handleToggleSidebar = this.handleToggleSidebar.bind(this);
-  }
-
-  handleToggleSidebar() {
-    Dispatcher.dispatch({
-      actionType: Constants.TOGGLE_SIDEBAR
-    });
   }
 
   render() {
@@ -44,13 +36,6 @@ class SidebarMainNavbar extends React.Component {
               )}
             </div>
           </NavbarBrand>
-          {/* eslint-disable-next-line */}
-          <a
-            className="toggle-sidebar d-sm-inline d-md-none d-lg-none"
-            onClick={this.handleToggleSidebar}
-          >
-            <i className="material-icons">&#xE5C4;</i>
-          </a>
         </Navbar>
       </div>
     );

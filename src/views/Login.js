@@ -48,7 +48,6 @@ class Login extends React.Component {
     return (
       <Container>
         <br/><br/><br/>
-        <br/><br/><br/>
         <Row>
           <Col sm={{size: 5, offset: 3}}>
             <Card>
