@@ -50,7 +50,7 @@ class Task extends React.Component {
   async componentDidMount() {
     try {
         const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.get(endpoints.allTask, { headers: { Authorization: `Token ${access_token}`} })
+        const response = await axios.get(endpoints.allTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           const tasks = response.data.tasks
           const todayTasks = tasks.filter(task => moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY'))
@@ -121,7 +121,7 @@ class Task extends React.Component {
         task_id: task._id
       }
       const access_token = localStorage.getItem('access_token') || '';
-      const response = await axios.post(endpoints.updateTask, update, { headers: { Authorization: `Token ${access_token}`} })
+      const response = await axios.put(endpoints.updateTask, update, { headers: { Authorization: access_token }})
       if(response.status === 200 && response.data.status) {
         this.props.history.push('/task')
       } else if(response.status === 401) {
@@ -141,7 +141,7 @@ class Task extends React.Component {
     const { newTask } = this.state
     try {
         const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.post(endpoints.addTask, newTask, { headers: { Authorization: `Token ${access_token}`} })
+        const response = await axios.post(endpoints.addTask, newTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           const task = response.data.task
           const allTasks = [ ...this.state.allTasks, task ]
@@ -182,7 +182,7 @@ class Task extends React.Component {
         }
         console.log('newData',newData);
         const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.post(endpoints.updateTask, newData, { headers: { Authorization: `Token ${access_token}`} })
+        const response = await axios.put(endpoints.updateTask, newData, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           this.props.history.push('/task')
         } else if(response.status === 401) {
