@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 class ComingSoon extends React.PureComponent {
 
   goBack = () => {
-    console.log('', this.props.history.goBack());
+    this.props.history.goBack()
   }
 
   render() {

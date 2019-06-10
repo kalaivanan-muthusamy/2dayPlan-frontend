@@ -29,7 +29,6 @@ class Login extends React.Component {
     const result = await axios.post(loginUrl, postData)
     if(result.status === 200 && result.data.status) {
       localStorage.setItem('access_token', result.data.access_token);
-      console.warn('login history', this.props.history);
       this.props.history.push(`/tasks`)
     } else {
       this.setState({

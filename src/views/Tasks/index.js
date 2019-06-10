@@ -44,9 +44,7 @@ class Tasks extends React.Component {
         const response = await axios.get(endpoints.allTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           const tasks = response.data.tasks
-          const todayTasks = tasks.filter(task => {
-            return moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY') || tasks.filter(task => moment(task.target_date).isAfter(moment()))
-          })
+          const todayTasks = this.getTodayTask(tasks)
           this.setState({ allTasks: tasks, tasks: todayTasks })
         } else if(response.status === 401) {
           this.props.history.push('/login')
@@ -54,8 +52,8 @@ class Tasks extends React.Component {
           alert('Failed')
         }
     } catch (error) {
-      const response = error.response
-      if(response.status === 401) {
+      const response = error.response || null
+      if(response && response.status === 401) {
         this.props.history.push('/login')
       }
     }
@@ -66,12 +64,19 @@ class Tasks extends React.Component {
     this.updateTasks(view, this.state.allTasks)
   }
 
+  getTodayTask (allTasks) {
+    return allTasks.filter(task => {
+      const target_date = moment(task.target_date).format('DD-MM-YYYY')
+      const sameDate = moment(target_date).isSame(moment().format('DD-MM-YYYY'))
+      const expired = moment(target_date).isBefore(moment().format('DD-MM-YYYY'))
+      return sameDate || (!task.status && expired)
+    })
+  }
+
   updateTasks(view, allTasks) {
     let tasks = []
     if(view === 'today') {
-      tasks = allTasks.filter(task => {
-        return moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY') || tasks.filter(task => moment(task.target_date).isAfter(moment()))
-      })
+      tasks = this.getTodayTask(allTasks)
     }
     else if(view === 'tomorrow') {
       tasks = allTasks.filter(task => moment(task.target_date).format('DD-MM-YYYY') === moment().add(1, 'd').format('DD-MM-YYYY'))
@@ -87,34 +92,6 @@ class Tasks extends React.Component {
 
   newTask() {
     this.setState({ addTaskModalOpen: true })
-  }
-
-  /**
-  * Update the Task Status
-  *
-  */
-  async onStatusChange(e, task_id, status) {
-    try {
-      const update = {
-        status: status,
-        task_id: task_id
-      }
-      const access_token = localStorage.getItem('access_token') || '';
-      const response = await axios.put(endpoints.updateTask, update, { headers: { Authorization: access_token }})
-      if(response.status === 200 && response.data.status) {
-        this.props.history.push('/tasks')
-      } else if(response.status === 401) {
-        this.props.history.push('/login')
-      } else {
-        alert('Failed')
-      }
-      return true
-    } catch (error) {
-      const response = error.response || {}
-      if(response.status === 401) {
-        this.props.history.push('/login')
-      }
-    }
   }
 
   /**
@@ -164,17 +141,18 @@ class Tasks extends React.Component {
   * Update the Task
   *
   */
-  async onTaskUpdate(task) {
+  async onTaskUpdate(task, onlyStatus = false) {
     try {
         const updatedTask = {
           task_details: task.task_details,
           target_date: moment(task.target_date).format(),
-          task_id: task._id
+          task_id: task._id,
+          status: task.status
         }
         const access_token = localStorage.getItem('access_token') || '';
         const response = await axios.put(endpoints.updateTask, updatedTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
-          this.toggleModel('editTaskModelOpen')
+          !onlyStatus && this.toggleModel('editTaskModelOpen')
           // Replace this task in the allTask state object with updated value
           let allTasks = [ ...this.state.allTasks ]
           const index = allTasks.findIndex(t => t._id === task._id)
@@ -255,6 +233,7 @@ class Tasks extends React.Component {
                 onEditClick={this.onEditClick}
                 onStatusChange={this.onStatusChange}
                 onDeleteTask={this.onDeleteTask}
+                onTaskUpdate={this.onTaskUpdate}
               />)
             })}
           </Col>

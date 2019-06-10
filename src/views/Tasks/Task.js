@@ -21,10 +21,15 @@ class Task extends React.Component {
   }
 
   onStatusChange(e, task) {
-    this.props.onStatusChange(e, task._id, !this.state.status)
+    const updateTask = { ...task, status: !this.state.status }
+    this.props.onTaskUpdate(updateTask, true)
     this.setState({
       status: !this.state.status
     })
+  }
+
+  isExpired(task) {
+    return !task.status && moment(moment(task.target_date).format('DD-MM-YYYY')).isBefore(moment().format('DD-MM-YYYY'))
   }
 
   render() {
@@ -39,7 +44,7 @@ class Task extends React.Component {
                 <h6 className="m-0 d-inline">{task.task_details} </h6>
               </Col>
               <Col className='text-right'>
-                <small>Target Date: {moment(task.target_date).format('DD-MM-YYYY')}</small>
+                <small style={this.isExpired(task) ? {color: 'red'} : {}}>Target Date: {moment(task.target_date).format('DD-MM-YYYY')}</small>
               </Col>
             </Row>
           </CardHeader>
