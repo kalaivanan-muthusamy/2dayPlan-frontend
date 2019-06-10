@@ -1,4 +1,4 @@
-const server = 'http://localhost:8001'
+const server = process.env.PROD_API || 'http://localhost:8001'
 
 const endpoints = {
   login: `${server}/users/login`,
