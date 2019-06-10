@@ -6,17 +6,12 @@ import {
   ButtonToolbar,
   ButtonGroup,
   Button,
-  InputGroup,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Form,
-  FormGroup,
-  FormInput,
-  DatePicker
+  InputGroup
 } from "shards-react";
 import PageTitle from "../../components/common/PageTitle";
 import Task from './Task'
+import EditTask from './EditTask'
+import AddTask from './AddTask'
 import axios from 'axios'
 import moment from 'moment'
 import endpoints from '../../endpoints'
@@ -32,17 +27,15 @@ class Tasks extends React.Component {
       view: 'today',
       addTaskModalOpen: false,
       editTaskModelOpen: false,
-      newTask: {
-        task_details: '',
-        target_date: moment().format('YYYY-MM-DD')
-      },
-      editTask: {
-        task_details: '',
-        target_date: ''
-      }
+      editTask: {}
     }
 
     this.onEditClick = this.onEditClick.bind(this)
+    this.onNewTaskSubmit = this.onNewTaskSubmit.bind(this)
+    this.onTaskUpdate = this.onTaskUpdate.bind(this)
+    this.onDeleteTask = this.onDeleteTask.bind(this)
+
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token') || '';
   }
 
   async componentDidMount() {
@@ -51,7 +44,9 @@ class Tasks extends React.Component {
         const response = await axios.get(endpoints.allTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           const tasks = response.data.tasks
-          const todayTasks = tasks.filter(task => moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY'))
+          const todayTasks = tasks.filter(task => {
+            return moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY') || tasks.filter(task => moment(task.target_date).isAfter(moment()))
+          })
           this.setState({ allTasks: tasks, tasks: todayTasks })
         } else if(response.status === 401) {
           this.props.history.push('/login')
@@ -74,7 +69,9 @@ class Tasks extends React.Component {
   updateTasks(view, allTasks) {
     let tasks = []
     if(view === 'today') {
-      tasks = allTasks.filter(task => moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY'))
+      tasks = allTasks.filter(task => {
+        return moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY') || tasks.filter(task => moment(task.target_date).isAfter(moment()))
+      })
     }
     else if(view === 'tomorrow') {
       tasks = allTasks.filter(task => moment(task.target_date).format('DD-MM-YYYY') === moment().add(1, 'd').format('DD-MM-YYYY'))
@@ -92,26 +89,10 @@ class Tasks extends React.Component {
     this.setState({ addTaskModalOpen: true })
   }
 
-  onInputChange(e, field) {
-    let val = ''
-    if(field === 'target_date'){
-      val = e
-    } else {
-      val = e.target.value
-    }
-    this.setState({ newTask: { ...this.state.newTask, [field]: val }})
-  }
-
-  onEditInputChange(e, field) {
-    let val = ''
-    if(field === 'target_date'){
-      val = e
-    } else {
-      val = e.target.value
-    }
-    this.setState({ editTask: { ...this.state.editTask, [field]: val }})
-  }
-
+  /**
+  * Update the Task Status
+  *
+  */
   async onStatusChange(e, task_id, status) {
     try {
       const update = {
@@ -136,11 +117,14 @@ class Tasks extends React.Component {
     }
   }
 
-  async onSubmit() {
-    const { newTask } = this.state
+  /**
+  * Create new Task
+  *
+  */
+  async onNewTaskSubmit(task) {
     try {
         const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.post(endpoints.addTask, newTask, { headers: { Authorization: access_token }})
+        const response = await axios.post(endpoints.addTask, task, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
           const task = response.data.task
           const allTasks = [ ...this.state.allTasks, task ]
@@ -152,53 +136,96 @@ class Tasks extends React.Component {
           alert('Failed')
         }
     } catch (error) {
-      const response = error.response
-      if(response.status === 401) {
+      const response = error.response || null
+      if(response && response.status === 401) {
         this.props.history.push('/login')
       }
     }
   }
 
+  /**
+  * Toggle the Add Task / Edit Task Model
+  *
+  */
   toggleModel(model) {
-    console.log('model', model);
     this.setState({ [model]: !this.state[model] })
   }
 
+  /**
+  * Open the Edit Task model with required inputs
+  *
+  */
   onEditClick(task) {
     this.toggleModel('editTaskModelOpen')
     this.setState({ editTask: task })
   }
 
-  async onTaskUpdate() {
-    const { editTask } = this.state
+  /**
+  * Update the Task
+  *
+  */
+  async onTaskUpdate(task) {
     try {
-        const newData = {
-          task_details: editTask.task_details,
-          target_date: moment(editTask.target_date).format(),
-          task_id: editTask._id
+        const updatedTask = {
+          task_details: task.task_details,
+          target_date: moment(task.target_date).format(),
+          task_id: task._id
         }
         const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.put(endpoints.updateTask, newData, { headers: { Authorization: access_token }})
+        const response = await axios.put(endpoints.updateTask, updatedTask, { headers: { Authorization: access_token }})
         if(response.status === 200 && response.data.status) {
-          this.props.history.push('/tasks')
+          this.toggleModel('editTaskModelOpen')
+          // Replace this task in the allTask state object with updated value
+          let allTasks = [ ...this.state.allTasks ]
+          const index = allTasks.findIndex(t => t._id === task._id)
+          allTasks[index] = task
+          this.setState({ allTasks: allTasks })
+          this.updateTasks(this.state.view, allTasks)
         } else if(response.status === 401) {
           this.props.history.push('/login')
         } else {
           alert('Failed')
         }
     } catch (error) {
-      const response = error.response
-      if(response.status === 401) {
+      const response = error.response || null
+      if(response && response.status === 401) {
+        this.props.history.push('/login')
+      }
+    }
+  }
+
+  /**
+  * Detelet the Tasks
+  *
+  */
+  async onDeleteTask(task) {
+    try {
+        const response = await axios.delete(endpoints.deleteTask, { data: { task_id: task._id } })
+        if(response.status === 200 && response.data.status) {
+          // Replace this task in the allTask state object with updated value
+          let allTasks = [ ...this.state.allTasks ]
+          const index = allTasks.findIndex(t => t._id === task._id)
+          allTasks.splice(index, 1)
+          this.setState({ allTasks: allTasks })
+          this.updateTasks(this.state.view, allTasks)
+        } else if(response.status === 401) {
+          this.props.history.push('/login')
+        } else {
+          alert('Failed')
+        }
+    } catch (error) {
+      const response = error.response || null
+      if(response && response.status === 401) {
         this.props.history.push('/login')
       }
     }
   }
 
   render() {
-    const { tasks, view, addTaskModalOpen, editTaskModelOpen, newTask, editTask } = this.state
+    const { tasks, view, addTaskModalOpen, editTaskModelOpen, editTask } = this.state
     return (
       <Container fluid className="main-content-container px-4 pb-4">
-        {/* Page Header */}
+
         <Row noGutters className="page-header py-4">
           <PageTitle sm="4" title="Tasks" className="text-sm-left" />
         </Row>
@@ -227,59 +254,14 @@ class Tasks extends React.Component {
                 task={task}
                 onEditClick={this.onEditClick}
                 onStatusChange={this.onStatusChange}
+                onDeleteTask={this.onDeleteTask}
               />)
             })}
           </Col>
         </Row>
-        <Modal open={addTaskModalOpen} toggle={() => this.toggleModel('addTaskModalOpen')}>
-          <ModalHeader>Add New Task</ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <label htmlFor="task">Task</label>
-                <FormInput value={newTask.task_details} onChange={e => this.onInputChange(e, 'task_details')} id="task" placeholder="Task Details" />
-              </FormGroup>
-              <FormGroup>
-                <label htmlFor="targetDate">Target Date</label>
-                <DatePicker
-                  className="form-control"
-                  id="targetDate"
-                  selected={moment(newTask.target_date).toDate()}
-                  dateFormat="dd-MM-yyyy"
-                  onChange={(e) => this.onInputChange(e, 'target_date')}
-                  placeholderText="Target Date"
-                  dropdownMode="select"
-                />
-              </FormGroup>
-              <Button type='button' onClick={() => this.onSubmit()}>Submit</Button>
-            </Form>
-          </ModalBody>
-        </Modal>
-        <Modal open={editTaskModelOpen} toggle={() => this.toggleModel('editTaskModelOpen')}>
-          <ModalHeader>Update Task</ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <label htmlFor="task">Task</label>
-                <FormInput value={editTask.task_details} onChange={e => this.onEditInputChange(e, 'task_details')} id="task" placeholder="Task Details" />
-              </FormGroup>
-              <FormGroup>
-                <label htmlFor="targetDate">Target Date</label>
-                <br/>
-                <DatePicker
-                  className="form-control"
-                  id="targetDate"
-                  selected={moment(editTask.target_date).toDate()}
-                  dateFormat="dd-MM-yyyy"
-                  onChange={(e) => this.onEditInputChange(e, 'target_date')}
-                  placeholderText="Target Date"
-                  dropdownMode="select"
-                />
-              </FormGroup>
-              <Button type='button' onClick={() => this.onTaskUpdate()}>Submit</Button>
-            </Form>
-          </ModalBody>
-        </Modal>
+
+        { addTaskModalOpen && <AddTask onNewTaskSubmit={this.onNewTaskSubmit} toggle={() => this.toggleModel('addTaskModalOpen')} /> }
+        { editTaskModelOpen && <EditTask  onTaskUpdate={this.onTaskUpdate} task={editTask} toggle={() => this.toggleModel('editTaskModelOpen')} /> }
       </Container>
     )
   }

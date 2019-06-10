@@ -28,7 +28,7 @@ class Task extends React.Component {
   }
 
   render() {
-    const { task, onEditClick } = this.props
+    const { task, onEditClick, onDeleteTask } = this.props
     const { status } = this.state
     return (
       <Fragment>
@@ -56,7 +56,7 @@ class Task extends React.Component {
               <Col className='text-right'>
                 <ButtonGroup size="sm">
                   <Button onClick={() => onEditClick(task)} className='text-light' outline theme="light">Edit</Button>
-                  <Button className='text-light' outline theme="light">Delete</Button>
+                  <Button onClick={() => onDeleteTask(task)} className='text-light' outline theme="light">Delete</Button>
                 </ButtonGroup>
               </Col>
             </Row>

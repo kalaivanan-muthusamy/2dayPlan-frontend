@@ -2,7 +2,7 @@ export default function() {
   return [
     {
       title: "Tasks",
-      to: "/task",
+      to: "/tasks",
       htmlBefore: '<i class="material-icons">settings</i>',
       htmlAfter: ""
     },

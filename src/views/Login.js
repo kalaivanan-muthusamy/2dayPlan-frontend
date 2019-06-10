@@ -30,7 +30,7 @@ class Login extends React.Component {
     if(result.status === 200 && result.data.status) {
       localStorage.setItem('access_token', result.data.access_token);
       console.warn('login history', this.props.history);
-      this.props.history.push(`/task`)
+      this.props.history.push(`/tasks`)
     } else {
       this.setState({
         error: true,
