@@ -1,5 +1,5 @@
 const server = process.env.PROD_API || 'http://localhost:8001'
-
+console.warn('process env', process.env);
 const endpoints = {
   login: `${server}/users/login`,
   allTask: `${server}/tasks`,
