@@ -18,6 +18,8 @@ class UserActions extends React.Component {
       visible: false
     };
 
+    this.username = localStorage.getItem('2dayPlan-luname')
+
     this.toggleUserActions = this.toggleUserActions.bind(this);
     this.onLogout = this.onLogout.bind(this);
   }
@@ -37,7 +39,7 @@ class UserActions extends React.Component {
     return (
       <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
         <DropdownToggle caret tag={NavLink} className="text-nowrap p-3">
-          <span style={{ cursor: 'pointer' }} className="d-none d-md-inline-block">Kalaivanan Muthusamy</span>
+          <span style={{ cursor: 'pointer' }} className="d-none d-md-inline-block">{this.username}</span>
         </DropdownToggle>
         <Collapse tag={DropdownMenu} right small open={this.state.visible}>
           <DropdownItem tag={Link} to="profile">

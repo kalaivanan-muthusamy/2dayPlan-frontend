@@ -29,6 +29,7 @@ class Login extends React.Component {
     const result = await axios.post(loginUrl, postData)
     if(result.status === 200 && result.data.status) {
       localStorage.setItem('access_token', result.data.access_token);
+      localStorage.setItem('2dayPlan-luname', result.data.user.name || 'My Account');
       this.props.history.push(`/tasks`)
     } else {
       this.setState({

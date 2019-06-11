@@ -15,7 +15,7 @@ import AddTask from './AddTask'
 import axios from 'axios'
 import moment from 'moment'
 import endpoints from '../../endpoints'
-
+import { toast } from 'react-toastify'
 
 class Tasks extends React.Component {
 
@@ -107,16 +107,16 @@ class Tasks extends React.Component {
           const allTasks = [ ...this.state.allTasks, task ]
           this.setState({ allTasks: allTasks, addTaskModalOpen: false })
           this.updateTasks(this.state.view, allTasks)
-        } else if(response.status === 401) {
-          this.props.history.push('/login')
+          toast.success('New task added successfully');
         } else {
-          alert('Failed')
+          toast.error('Unable to add new task');
         }
     } catch (error) {
       const response = error.response || null
       if(response && response.status === 401) {
         this.props.history.push('/login')
       }
+      toast.error('Unable to add new task');
     }
   }
 
@@ -159,16 +159,16 @@ class Tasks extends React.Component {
           allTasks[index] = task
           this.setState({ allTasks: allTasks })
           this.updateTasks(this.state.view, allTasks)
-        } else if(response.status === 401) {
-          this.props.history.push('/login')
+          toast.success('Task updated successfully');
         } else {
-          alert('Failed')
+          toast.error('Unable to update the task');
         }
     } catch (error) {
       const response = error.response || null
       if(response && response.status === 401) {
         this.props.history.push('/login')
       }
+      toast.error('Unable to update the task');
     }
   }
 
@@ -186,16 +186,16 @@ class Tasks extends React.Component {
           allTasks.splice(index, 1)
           this.setState({ allTasks: allTasks })
           this.updateTasks(this.state.view, allTasks)
-        } else if(response.status === 401) {
-          this.props.history.push('/login')
+          toast.success('Task deleted successfully');
         } else {
-          alert('Failed')
+          toast.error('Unable to delete the task');
         }
     } catch (error) {
       const response = error.response || null
       if(response && response.status === 401) {
         this.props.history.push('/login')
       }
+      toast.error('Unable to delete the task');
     }
   }
 

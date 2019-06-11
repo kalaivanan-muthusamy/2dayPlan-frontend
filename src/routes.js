@@ -9,6 +9,7 @@ import ComingSoon from "./views/ComingSoon";
 import Tasks from "./views/Tasks";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Profile from "./views/Profile";
 
 
 export default [
@@ -46,6 +47,6 @@ export default [
   {
     path: "/profile",
     layout: DefaultLayout,
-    component: ComingSoon
+    component: Profile
   }
 ];
