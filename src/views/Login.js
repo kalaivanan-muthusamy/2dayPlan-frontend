@@ -58,7 +58,7 @@ class Login extends React.Component {
                   className="d-inline-block align-top mr-2"
                   style={{ maxWidth: "30px" }}
                   src={logo}
-                  alt="Shards Dashboard"
+                  alt="2dayPlan"
                 />}
                 2dayPlan</CardTitle>
                 <Form>
