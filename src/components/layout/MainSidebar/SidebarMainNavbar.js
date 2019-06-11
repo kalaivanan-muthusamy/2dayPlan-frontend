@@ -28,7 +28,7 @@ class SidebarMainNavbar extends React.Component {
               />}
               {!hideLogoText && (
                 <span className="d-none d-md-inline ml-1">
-                  mileStone Tasker
+                  2dayPlan
                 </span>
               )}
             </div>

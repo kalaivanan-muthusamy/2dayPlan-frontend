@@ -200,48 +200,59 @@ class Tasks extends React.Component {
   }
 
   render() {
-    const { tasks, view, addTaskModalOpen, editTaskModelOpen, editTask } = this.state
+    const { allTasks, tasks, view, addTaskModalOpen, editTaskModelOpen, editTask } = this.state
     return (
-      <Container fluid className="main-content-container px-4 pb-4">
+      <React.Fragment>
+        { tasks && allTasks.length > 0 ? <Container fluid className="main-content-container px-4 pb-4">
+          <Row noGutters className="page-header py-4">
+            <PageTitle sm="4" title="Tasks" className="text-sm-left" />
+          </Row>
 
-        <Row noGutters className="page-header py-4">
-          <PageTitle sm="4" title="Tasks" className="text-sm-left" />
-        </Row>
+          <Row noGutters className="page-header py-4">
+            <Col>
+              <ButtonToolbar>
+                <InputGroup size="sm" >
+                  <Button  onClick={() => this.newTask()} outline>New Task</Button>
+                </InputGroup>
+                <ButtonGroup size="sm" className="ml-auto mr-2">
+                  <Button onClick={() => this.onViewChange('all')} outline={view === 'all' ? null : true } > All</Button>
+                  <Button onClick={() => this.onViewChange('today')} outline={view === 'today' ? null : true }> Today</Button>
+                  <Button onClick={() => this.onViewChange('tomorrow')} outline={view === 'tomorrow' ? null : true }> Tomorrow</Button>
+                  <Button  onClick={() => this.onViewChange('thisMonth')} outline={view === 'thisMonth' ? null : true } >This Month</Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Col>
+          </Row>
 
-        <Row noGutters className="page-header py-4">
-          <Col>
-            <ButtonToolbar>
-              <InputGroup size="sm" >
-                <Button  onClick={() => this.newTask()} outline>New Task</Button>
-              </InputGroup>
-              <ButtonGroup size="sm" className="ml-auto mr-2">
-                <Button onClick={() => this.onViewChange('all')} outline={view === 'all' ? null : true } > All</Button>
-                <Button onClick={() => this.onViewChange('today')} outline={view === 'today' ? null : true }> Today</Button>
-                <Button onClick={() => this.onViewChange('tomorrow')} outline={view === 'tomorrow' ? null : true }> Tomorrow</Button>
-                <Button  onClick={() => this.onViewChange('thisMonth')} outline={view === 'thisMonth' ? null : true } >This Month</Button>
-              </ButtonGroup>
-            </ButtonToolbar>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
-            {tasks && tasks.map(task => {
-              return (<Task
-                key={task._id}
-                task={task}
-                onEditClick={this.onEditClick}
-                onStatusChange={this.onStatusChange}
-                onDeleteTask={this.onDeleteTask}
-                onTaskUpdate={this.onTaskUpdate}
-              />)
-            })}
-          </Col>
-        </Row>
-
-        { addTaskModalOpen && <AddTask onNewTaskSubmit={this.onNewTaskSubmit} toggle={() => this.toggleModel('addTaskModalOpen')} /> }
-        { editTaskModelOpen && <EditTask  onTaskUpdate={this.onTaskUpdate} task={editTask} toggle={() => this.toggleModel('editTaskModelOpen')} /> }
-      </Container>
+          <Row>
+            <Col>
+              {tasks && tasks.map(task => {
+                return (<Task
+                  key={task._id}
+                  task={task}
+                  onEditClick={this.onEditClick}
+                  onStatusChange={this.onStatusChange}
+                  onDeleteTask={this.onDeleteTask}
+                  onTaskUpdate={this.onTaskUpdate}
+                />)
+              })}
+            </Col>
+          </Row>
+        </Container>
+        :
+        <Container fluid className="main-content-container px-4 pb-4">
+          <div className="error">
+            <div className="error__content">
+              <h3>No Task added!</h3><br/>
+              <p>Plan your better tomorrow by planning your task</p>
+              <Button onClick={() => this.newTask()}> New Task</Button>
+            </div>
+          </div>
+        </Container>
+      }
+      { addTaskModalOpen && <AddTask onNewTaskSubmit={this.onNewTaskSubmit} toggle={() => this.toggleModel('addTaskModalOpen')} /> }
+      { editTaskModelOpen && <EditTask  onTaskUpdate={this.onTaskUpdate} task={editTask} toggle={() => this.toggleModel('editTaskModelOpen')} /> }
+      </React.Fragment>
     )
   }
 

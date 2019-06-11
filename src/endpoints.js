@@ -1,5 +1,6 @@
 const server = 'https://milestone-tasker-api.herokuapp.com'
 const endpoints = {
+  register: `${server}/users/register`,
   login: `${server}/users/login`,
   allTask: `${server}/tasks`,
   addTask: `${server}/tasks`,

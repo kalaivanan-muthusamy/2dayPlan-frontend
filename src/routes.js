@@ -8,6 +8,7 @@ import { DefaultLayout, LoginLayout } from "./layouts";
 import ComingSoon from "./views/ComingSoon";
 import Tasks from "./views/Tasks";
 import Login from "./views/Login";
+import Register from "./views/Register";
 
 
 export default [
@@ -21,6 +22,11 @@ export default [
     path: "/login",
     layout: LoginLayout,
     component: Login
+  },
+  {
+    path: "/register",
+    layout: LoginLayout,
+    component: Register
   },
   {
     path: "/tasks",

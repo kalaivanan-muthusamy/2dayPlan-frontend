@@ -4,36 +4,36 @@ import endpoints from '../endpoints'
 import axios from 'axios'
 import logo from '../images/mileStone-logo.svg'
 
-class Login extends React.Component {
+class Register extends React.Component {
 
   constructor(props){
     super(props)
     this.state = {
+      name: '',
       email: '',
       password: '',
       error: false,
       errorMsg: '',
       loading: false
     }
-    this.onLogin = this.onLogin.bind(this)
+    this.onRegister = this.onRegister.bind(this)
   }
 
-  async onLogin() {
-    const { email, password } = this.state
+  async onRegister() {
+    const { name, email, password } = this.state
 
-    const loginUrl = endpoints.login
     const postData = {
+      name: name,
       email: email,
       password: password
     }
-    const result = await axios.post(loginUrl, postData)
+    const result = await axios.post(endpoints.register, postData)
     if(result.status === 200 && result.data.status) {
-      localStorage.setItem('access_token', result.data.access_token);
-      this.props.history.push(`/tasks`)
+      this.props.history.push(`/login`)
     } else {
       this.setState({
         error: true,
-        errorMsg: result.data.message
+        errorMsg: result.data.message || 'Unable to handle the request now'
       })
     }
   }
@@ -43,7 +43,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email, password, error, errorMsg } = this.state
+    const { name, email, password, error, errorMsg } = this.state
     return (
       <Container>
         <br/><br/><br/>
@@ -61,8 +61,12 @@ class Login extends React.Component {
                 />}
                 2dayPlan</CardTitle>
                 <Form>
+                  <FormGroup>
+                    <label htmlFor="name">Name</label>
+                    <FormInput value={name} onChange={e => this.onInputChange(e, 'name')} id="name" placeholder="Name" />
+                  </FormGroup>
                  <FormGroup>
-                   <label htmlFor="username">Email</label>
+                   <label htmlFor="email">Email</label>
                    <FormInput value={email} onChange={e => this.onInputChange(e, 'email')} id="email" placeholder="Email" />
                  </FormGroup>
                  <FormGroup>
@@ -70,8 +74,8 @@ class Login extends React.Component {
                    <FormInput value={password} type="password" onChange={e => this.onInputChange(e, 'password')} id="password" placeholder="Password" />
                  </FormGroup>
                  <FormGroup>
-                   <Button onClick={this.onLogin}>Login</Button>
-                   <a href='/register' className='float-right btn btn-link'>Register</a>
+                   <Button onClick={this.onRegister}>Register</Button>
+                   <a href='/login' className='float-right btn btn-link'>Login</a>
                  </FormGroup>
                </Form>
                { error && <Alert theme='danger'>
@@ -88,4 +92,4 @@ class Login extends React.Component {
 
 }
 
-export default Login;
+export default Register;
