@@ -60,7 +60,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { name, email, password } = this.state
+    const { name, email, password, cpassword } = this.state
     return (
       <Container fluid className="main-content-container px-4 pb-4">
         <Row noGutters className="page-header py-4">
@@ -85,7 +85,7 @@ class Profile extends React.Component {
                  </FormGroup>
                  <FormGroup>
                    <label htmlFor="cpassword">Confirm Password</label>
-                   <FormInput value={password} type="password" onChange={e => this.onInputChange(e, 'cpassword')} id="cpassword" placeholder="Confirm Password" />
+                   <FormInput value={cpassword} type="password" onChange={e => this.onInputChange(e, 'cpassword')} id="cpassword" placeholder="Confirm Password" />
                  </FormGroup>
                  <FormGroup>
                     <br/>
