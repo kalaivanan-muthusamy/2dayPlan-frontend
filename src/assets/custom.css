@@ -182,6 +182,11 @@ footer ul.links li a {
   .bs4 {
     display: block;
   }
+
+  .bs1 {
+    width: 600px;
+    height: 600px;
+  }
 }
 
 /* Extra large devices (large desktops, 1200px and up) */

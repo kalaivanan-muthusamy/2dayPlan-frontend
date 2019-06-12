@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "shards-react";
-import { Redirect } from 'react-router-dom'
+import { Container, Row, Col } from "shards-react";
 import logo from '../images/logo.png'
 
 class Landing extends React.Component {
