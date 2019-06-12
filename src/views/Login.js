@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react";
 import endpoints from '../endpoints'
 import axios from 'axios'
-import logo from '../images/mileStone-logo.svg'
+import logo from '../images/logo.png'
 
 class Login extends React.Component {
 
@@ -56,11 +56,11 @@ class Login extends React.Component {
                 {<img
                   id="main-logo"
                   className="d-inline-block align-top mr-2"
-                  style={{ maxWidth: "30px" }}
+                  style={{ maxWidth: "130px" }}
                   src={logo}
                   alt="2dayPlan"
                 />}
-                2dayPlan</CardTitle>
+                </CardTitle>
                 <Form>
                  <FormGroup>
                    <label htmlFor="username">Email</label>

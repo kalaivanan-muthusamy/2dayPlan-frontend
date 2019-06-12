@@ -1,3 +1,123 @@
+body {
+  background: #FFF !important;
+}
+/* COMPONENTS */
+
+/* Links */
+ul.links {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  list-style-type: none;
+}
+
+ul.links li {
+  float: left;
+  padding: 0 .5rem;
+}
+
+/* SECTIONS */
+
+/* Header */
+header {
+  padding: 2rem 0;
+  background-color: #FFF;
+  z-index: 100;
+  position: relative;
+}
+
+header ul.links {
+}
+
+header ul.links li{
+  color: red;
+}
+
+header ul.links li a{
+  color: red;
+}
+
+.bs1 {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  height: 700px;
+  width: 700px;
+  background-size: cover;
+  background-image: url('../images/bs1.png');
+}
+
+.bs4 {
+  position: absolute;
+  z-index: 0;
+  top: 600px;
+  left: 900px;
+  height: 70px;
+  width: 70px;
+  background-size: cover;
+  background-image: url('../images/bs2.png');
+}
+
+.bs3 {
+  position: absolute;
+  z-index: 0;
+  top: 170px;
+  left: 300px;
+  height: 130px;
+  width: 130px;
+  background-size: cover;
+  background-image: url('../images/bs2.png');
+}
+
+.bs2 {
+  position: absolute;
+  z-index: 0;
+  top: 20px;
+  left: 50vw;
+  height: 60px;
+  width: 60px;
+  background-size: cover;
+  background-image: url('../images/bs2.png');
+}
+
+/* Banner */
+
+main.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFF;
+  padding: 3rem 0;
+  min-height: 750px;
+}
+
+main.banner h1{
+  font-size: 30px;
+  font-weight: 300;
+}
+
+/* Footer */
+
+footer {
+  clear: both;
+  background: #F4F4F4;
+  text-align: center;
+}
+
+footer ul.links {
+  padding: 1rem 0;
+}
+
+footer ul.links li a {
+  padding: 0 1rem;
+}
+
+footer ul.links li a {
+  color: #C1C1C1
+}
+
+/* OVERWITES */
 .react-datepicker-manager,
 .react-datepicker-wrapper,
 .react-datepicker__input-container {
@@ -6,4 +126,74 @@
 
 .btn-outline-light {
   border-color: #8a8e92 !important;
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 575.98px) {
+  main.banner {
+    min-height: auto;
+  }
+
+  .bs1,
+  .bs2,
+  .bs3,
+  .bs4 {
+    display: none;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  main.banner {
+    min-height: auto;
+  }
+
+  .bs1,
+  .bs2,
+  .bs3,
+  .bs4 {
+    display: none;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  main.banner {
+    min-height: auto;
+  }
+  .bs1,
+  .bs2,
+  .bs3,
+  .bs4 {
+    display: none;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) adn (max-width: 1199.98px){
+  main.banner {
+    min-height: 740px;
+  }
+
+  .bs1,
+  .bs2,
+  .bs3,
+  .bs4 {
+    display: block;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  main.banner {
+    min-height: 740px;
+  }
+
+  .bs1,
+  .bs2,
+  .bs3,
+  .bs4 {
+    display: block;
+  }
 }

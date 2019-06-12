@@ -1,8 +1,5 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-
 // Layout Types
-import { DefaultLayout, LoginLayout } from "./layouts";
+import { DefaultLayout, LoginLayout, Fluid } from "./layouts";
 
 // Route Views
 import ComingSoon from "./views/ComingSoon";
@@ -10,14 +7,14 @@ import Tasks from "./views/Tasks";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Profile from "./views/Profile";
-
+import Landing from "./views/Landing";
 
 export default [
   {
     path: "/",
     exact: true,
-    layout: DefaultLayout,
-    component: () => <Redirect to="/login" />
+    layout: Fluid,
+    component: Landing
   },
   {
     path: "/login",

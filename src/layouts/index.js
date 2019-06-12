@@ -1,3 +1,4 @@
 import DefaultLayout from "./Default";
 import LoginLayout from "./Login";
-export { DefaultLayout, LoginLayout };
+import Fluid from './Fluid'
+export { DefaultLayout, LoginLayout, Fluid };
