@@ -52,9 +52,9 @@ header ul.links li a{
   position: absolute;
   z-index: 0;
   top: 600px;
-  left: 900px;
-  height: 70px;
-  width: 70px;
+  left: 800px;
+  height: 90px;
+  width: 90px;
   background-size: cover;
   background-image: url('../images/bs2.png');
 }
