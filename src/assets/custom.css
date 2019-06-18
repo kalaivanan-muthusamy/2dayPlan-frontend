@@ -1,6 +1,7 @@
 body {
   background: #FFF !important;
 }
+
 /* COMPONENTS */
 
 /* Links */
@@ -48,35 +49,23 @@ header ul.links li a{
   background-image: url('../images/bs1.png');
 }
 
-.bs4 {
+.bs2 {
   position: absolute;
   z-index: 0;
-  top: 600px;
-  left: 800px;
-  height: 90px;
-  width: 90px;
   background-size: cover;
   background-image: url('../images/bs2.png');
 }
 
 .bs3 {
   position: absolute;
-  z-index: 0;
-  top: 170px;
-  left: 300px;
-  height: 130px;
-  width: 130px;
+  z-index: 100;
   background-size: cover;
   background-image: url('../images/bs2.png');
 }
 
-.bs2 {
+.bs4 {
   position: absolute;
   z-index: 0;
-  top: 20px;
-  left: 50vw;
-  height: 60px;
-  width: 60px;
   background-size: cover;
   background-image: url('../images/bs2.png');
 }
@@ -133,6 +122,7 @@ footer ul.links li a {
 @media (max-width: 575.98px) {
   main.banner {
     min-height: auto;
+    padding: 1rem 0 2rem 0;
   }
 
   .bs1,
@@ -140,6 +130,11 @@ footer ul.links li a {
   .bs3,
   .bs4 {
     display: none;
+  }
+
+  footer ul.links li {
+    width: 100%;
+    padding: .5rem 0;
   }
 }
 
@@ -147,6 +142,7 @@ footer ul.links li a {
 @media (min-width: 576px) and (max-width: 767.98px) {
   main.banner {
     min-height: auto;
+    padding: 1rem 0 2rem 0;
   }
 
   .bs1,
@@ -155,12 +151,18 @@ footer ul.links li a {
   .bs4 {
     display: none;
   }
+
+  footer ul.links li {
+    width: 100%;
+    padding: .5rem 0;
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
   main.banner {
     min-height: auto;
+    padding: 1rem 0 2rem 0;
   }
   .bs1,
   .bs2,
@@ -171,9 +173,9 @@ footer ul.links li a {
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) adn (max-width: 1199.98px){
+@media (min-width: 992px) and (max-width: 1199.98px){
   main.banner {
-    min-height: 740px;
+    min-height: 540px;
   }
 
   .bs1,
@@ -184,8 +186,29 @@ footer ul.links li a {
   }
 
   .bs1 {
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
+  }
+
+  .bs2 {
+    width: 100px;
+    height: 100px;
+    left: 10px;
+    top: -120px;
+  }
+
+  .bs3 {
+    top: -230px;
+    left: 450px;
+    height: 60px;
+    width: 60px;
+  }
+
+  .bs4 {
+    top: 200px;
+    left: 450px;
+    height: 90px;
+    width: 90px;
   }
 }
 
@@ -200,5 +223,26 @@ footer ul.links li a {
   .bs3,
   .bs4 {
     display: block;
+  }
+
+  .bs2 {
+    width: 140px;
+    height: 140px;
+    left: 10px;
+    top: -200px;
+  }
+
+  .bs3 {
+    top: -320px;
+    left: 600px;
+    height: 70px;
+    width: 70px;
+  }
+
+  .bs4 {
+    top: 240px;
+    left: 550px;
+    height: 110px;
+    width: 110px;
   }
 }

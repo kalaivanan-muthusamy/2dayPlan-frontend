@@ -23,18 +23,23 @@ class Landing extends React.Component {
               </Col>
             </Row>
             <div className='bs1'></div>
-            <div className='bs2'></div>
-            <div className='bs3'></div>
-            <div className='bs4'></div>
           </Container>
         </header>
         <main className='banner'>
           <Container>
-            <h1>Simple & Powerful To-Do Application <br/>
-            for every day task management</h1>
-            <p>Keep tracking your task in simple manager to focus on better tomorrow form today</p>
-            <br/>
-            <a href='/login' className='btn btn-primary'>Start Now</a>
+            <div style={{ position: 'relative' }}>
+              <Row>
+                <Col md='6' xs='12' sm='12'>
+                    <h1>Simple & Powerful To-Do Application
+                    for every day task management</h1>
+                    <p>Keep tracking your task in simple manner and just focus on what you need to complete exactly</p>
+                    <a href='/login' className='btn btn-primary'>Start Now</a>
+                </Col>
+              </Row>
+              <div className='bs2'></div>
+              <div className='bs3'></div>
+              <div className='bs4'></div>
+            </div>
           </Container>
         </main>
         <footer>
