@@ -8,6 +8,8 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Profile from "./views/Profile";
 import Landing from "./views/Landing";
+import TermsAndContiions from "./views/TermsAndConditions";
+import PrivacyPolicy from "./views/PrivacyPolicy";
 
 export default [
   {
@@ -15,6 +17,18 @@ export default [
     exact: true,
     layout: Fluid,
     component: Landing
+  },
+  {
+    path: "/terms-and-conditions",
+    exact: true,
+    layout: Fluid,
+    component: TermsAndContiions
+  },
+  {
+    path: "/privacy-policy",
+    exact: true,
+    layout: Fluid,
+    component: PrivacyPolicy
   },
   {
     path: "/login",

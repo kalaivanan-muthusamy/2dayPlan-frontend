@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
 import logo from '../images/logo.png'
+import FooterLinks from '../components/common/FooterLinks'
 
 class Landing extends React.Component {
 
@@ -45,10 +46,7 @@ class Landing extends React.Component {
         <footer>
           <Container>
             <ul className='links'>
-              <li><a href='/'>Terms & Conditions</a></li>
-              <li><a href='/'>Privacy Policy</a></li>
-              <li><a href='/'>Technology Stack</a></li>
-              <li><a href='/'>Feedback</a></li>
+              <FooterLinks/>
             </ul>
           </Container>
         </footer>
