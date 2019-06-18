@@ -11,6 +11,7 @@ import Landing from "./views/Landing";
 import TermsAndContiions from "./views/TermsAndConditions";
 import PrivacyPolicy from "./views/PrivacyPolicy";
 import Feedback from "./views/Feedback";
+import TechnologyStack from "./views/TechnologyStack";
 
 export default [
   {
@@ -36,6 +37,12 @@ export default [
     exact: true,
     layout: Fluid,
     component: Feedback
+  },
+  {
+    path: "/technology-stack",
+    exact: true,
+    layout: Fluid,
+    component: TechnologyStack
   },
   {
     path: "/login",
