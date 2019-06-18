@@ -31,9 +31,9 @@ class Landing extends React.Component {
               <Row>
                 <Col md='6' xs='12' sm='12'>
                     <h1>Simple & Powerful To-Do Application
-                    for every day task management</h1>
+                    for every day task management</h1><br/>
                     <p>Keep tracking your task in simple manner and just focus on what you need to complete exactly</p>
-                    <a href='/login' className='btn btn-primary'>Start Now</a>
+                    <a href='/login' className='btn btn-lg btn-primary'>Start Now</a>
                 </Col>
               </Row>
               <div className='bs2'></div>
