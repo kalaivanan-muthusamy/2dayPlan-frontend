@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 import logo from '../images/logo.png'
 import Footer from '../components/common/Footer'
+import FrontTitle from "../components/common/FrontTitle";
 
 class PrivacyPolicy extends React.Component {
 
@@ -26,11 +27,10 @@ class PrivacyPolicy extends React.Component {
           </Container>
         </header>
         <main>
+          <FrontTitle title='Privacy Policy'/>
           <Container>
             <Row>
               <Col className='pt-3'>
-                <h1 className='h2'>Privacy Policy for 2dayPlan</h1>
-
                 <p>At 2dayPlan, accessible from www.2dayplan.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by 2dayPlan and how we use it.</p>
 
                 <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at 2dayplan@gmail.com</p>
@@ -48,7 +48,7 @@ class PrivacyPolicy extends React.Component {
 
                 <p>2dayPlan will retain your personal information only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our policies.</p>
 
-                <p>If you are a resident of the European Economic Area (EEA), you have certain data protection rights. If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us. Our Privacy Policy was generated with the help of <a href="https://www.gdprprivacypolicy.net.com/">GDPR Privacy Policy Generator</a>.</p>
+                <p>If you are a resident of the European Economic Area (EEA), you have certain data protection rights. If you wish to be informed what Personal Information we hold about you and if you want it to be removed from our systems, please contact us.</p>
 
                 <p>In certain circumstances, you have the following data protection rights:</p>
                 <ul>
@@ -92,7 +92,7 @@ class PrivacyPolicy extends React.Component {
 
                 <h2 className='h3'>Online Privacy Policy Only</h2>
 
-                <p>Our Privacy Policy created at GDPRPrivacyPolicy.net) applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in 2dayPlan. This policy is not applicable to any information collected offline or via channels other than this website. <a href="https://gdprprivacypolicy.net">Our GDPR Privacy Policy</a> was generated from the GDPR Privacy Policy Generator.</p>
+                <p>Our Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in 2dayPlan. This policy is not applicable to any information collected offline or via channels other than this website.</p>
 
                 <h2 className='h3'>Consent</h2>
 

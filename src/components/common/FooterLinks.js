@@ -4,6 +4,7 @@ const FooterLinks = () => {
 
   return (
     <React.Fragment>
+      <li><a href='/'>Home</a></li>
       <li><a href='/terms-and-conditions'>Terms & Conditions</a></li>
       <li><a href='/privacy-policy'>Privacy Policy</a></li>
       <li><a href='/technology-stack'>Technology Stack</a></li>

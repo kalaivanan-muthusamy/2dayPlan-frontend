@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 import logo from '../images/logo.png'
 import Footer from '../components/common/Footer'
+import FrontTitle from "../components/common/FrontTitle";
 
 class Feedback extends React.Component {
 
@@ -27,10 +28,10 @@ class Feedback extends React.Component {
           </Container>
         </header>
         <main>
+          <FrontTitle title='Technology Stack'/>
           <Container>
             <Row>
               <Col className='pt-3'>
-                <h1 className='h2'>Technology Stack</h1><br/>
                 <h3>Frontend - React, RESTful API</h3>
                 <ul>
                   <li>axios: ^0.19.0</li>

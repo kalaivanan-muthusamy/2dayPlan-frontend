@@ -32,6 +32,27 @@ ul.links li {
   padding: 0 .5rem;
 }
 
+.front-title {
+  background: linear-gradient(to right, #007bff, #2e89ea)
+}
+
+.front-title h1{
+  color: #FFF;
+  padding: 2rem 0;
+}
+
+.front-title .icon {
+  display: flex;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  text-align: right;
+}
+.front-title .icon img {
+  max-height: 100px;
+  opacity: .05;
+  text-align: left;
+}
+
 /* SECTIONS */
 
 /* Header */
@@ -69,6 +90,7 @@ header ul.links li a{
   z-index: 0;
   background-size: cover;
   background-image: url('../images/bs2.png');
+  animation: left2right 10s linear 0s infinite;
 }
 
 .bs3 {
@@ -83,6 +105,22 @@ header ul.links li a{
   z-index: 0;
   background-size: cover;
   background-image: url('../images/bs2.png');
+}
+
+@keyframes left2right {
+  0% {
+    -ms-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px); }
+  50% {
+    -ms-transform: translateX(60px);
+    -webkit-transform: translateX(60px);
+    transform: translateX(60px); }
+  100% {
+    -ms-transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+  }
 }
 
 /* Banner */
@@ -121,8 +159,12 @@ footer ul.links li a {
   color: #b1b1b1
 }
 
-footer ul.links.copyright li a {
+footer .copyright ul.links li a {
   color: #5a6169
+}
+
+footer .copyright {
+  text-align: left;
 }
 
 /* OVERWITES */
@@ -174,6 +216,10 @@ footer ul.links.copyright li a {
   footer ul.links li {
     width: 100%;
     padding: .5rem 0;
+  }
+
+  footer .copyright{
+    text-align: center;
   }
 }
 

@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, FormInput, FormGroup, FormTextarea, Button, 
 import logo from '../images/logo.png'
 import Footer from '../components/common/Footer'
 import FormValidator from '../Utils/FormValidator'
+import FrontTitle from "../components/common/FrontTitle";
 
 class Feedback extends React.Component {
 
@@ -87,10 +88,11 @@ class Feedback extends React.Component {
           </Container>
         </header>
         <main>
+          <FrontTitle title='Feedback'/>
           <Container>
             <Row>
               <Col className='pt-3'>
-                <h1 className='h3'>Feedback</h1><br/>
+
                 <Form>
                   <FormGroup>
                     <label htmlFor="name">Name <span aria-hidden='true'>*</span><span className='sr-only'>Required</span></label>

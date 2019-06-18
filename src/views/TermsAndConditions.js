@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 import logo from '../images/logo.png'
 import Footer from '../components/common/Footer'
+import FrontTitle from "../components/common/FrontTitle";
 
 class TermsAndConditions extends React.Component {
 
@@ -26,10 +27,10 @@ class TermsAndConditions extends React.Component {
           </Container>
         </header>
         <main>
+          <FrontTitle title='Terms and Conditions'/>
           <Container>
             <Row>
               <Col className='pt-3'>
-                <h1 className="h2">Terms and Conditions</h1>
                 <br/>
                 <p>Welcome to 2dayPlan!</p>
 
