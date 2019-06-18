@@ -114,11 +114,15 @@ footer ul.links {
 }
 
 footer ul.links li a {
-  padding: 0 1rem;
+  padding: 0 .5rem;
 }
 
 footer ul.links li a {
-  color: #C1C1C1
+  color: #b1b1b1
+}
+
+footer ul.links.copyright li a {
+  color: #5a6169
 }
 
 /* OVERWITES */

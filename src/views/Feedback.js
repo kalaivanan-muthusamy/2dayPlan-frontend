@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Form, FormInput, FormGroup, FormTextarea, Button, Alert } from "shards-react";
 import logo from '../images/logo.png'
-import FooterLinks from '../components/common/FooterLinks'
+import Footer from '../components/common/Footer'
 import FormValidator from '../Utils/FormValidator'
 
 class Feedback extends React.Component {
@@ -117,13 +117,7 @@ class Feedback extends React.Component {
             </Row>
           </Container>
         </main>
-        <footer>
-          <Container>
-            <ul className='links'>
-              <FooterLinks/>
-            </ul>
-          </Container>
-        </footer>
+        <Footer/>
       </React.Fragment>
     )
   }
