@@ -10,6 +10,7 @@ import Profile from "./views/Profile";
 import Landing from "./views/Landing";
 import TermsAndContiions from "./views/TermsAndConditions";
 import PrivacyPolicy from "./views/PrivacyPolicy";
+import Feedback from "./views/Feedback";
 
 export default [
   {
@@ -29,6 +30,12 @@ export default [
     exact: true,
     layout: Fluid,
     component: PrivacyPolicy
+  },
+  {
+    path: "/feedback",
+    exact: true,
+    layout: Fluid,
+    component: Feedback
   },
   {
     path: "/login",
