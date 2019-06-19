@@ -43,6 +43,14 @@ class Login extends React.Component {
     this.setState({ [field]: e.target.value })
   }
 
+  componentDidMount() {
+    const access_token = localStorage.getItem('access_token');
+    const luname = localStorage.getItem('2dayPlan-luname');
+    if(access_token && luname) {
+      this.props.history.push(`/tasks`)
+    }
+  }
+
   render() {
     const { email, password, error, errorMsg } = this.state
     return (

@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import { Navbar } from "shards-react";
-
-import NavbarSearch from "./NavbarSearch";
+import { Navbar, Row, Col } from "shards-react";
 import NavbarNav from "./NavbarNav/NavbarNav";
+import logo from '../../../images/icon.svg'
 
 const MainNavbar = ({ layout, stickyTop }) => {
   const classes = classNames(
@@ -15,12 +14,22 @@ const MainNavbar = ({ layout, stickyTop }) => {
 
   return (
     <div className={classes}>
-      <div className="p-0">
-        <Navbar type="light" className="align-items-stretch flex-md-nowrap p-0">
-          <NavbarSearch />
-          <NavbarNav />
-        </Navbar>
-      </div>
+      <Row className='m-0'>
+        <Col>
+          <div style={{ height: '100%' }} className='d-flex align-items-center d-md-none'>
+            {<img
+              style={{ maxWidth: "35px" }}
+              src={logo}
+              alt="2dayPlan Logo"
+            />}
+          </div>
+        </Col>
+        <Col>
+          <Navbar type="light" className="justify-content-end p-0">
+            <NavbarNav />
+          </Navbar>
+        </Col>
+      </Row>
     </div>
   )
 }

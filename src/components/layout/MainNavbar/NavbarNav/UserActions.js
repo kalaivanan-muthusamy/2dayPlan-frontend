@@ -37,20 +37,22 @@ class UserActions extends React.Component {
 
   render() {
     return (
-      <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
-        <DropdownToggle caret tag={NavLink} className="text-nowrap p-3">
-          <span style={{ cursor: 'pointer' }} className="d-none d-md-inline-block">{this.username}</span>
-        </DropdownToggle>
-        <Collapse tag={DropdownMenu} right small open={this.state.visible}>
-          <DropdownItem tag={Link} to="profile">
-            <i className="material-icons">&#xE7FD;</i> Profile
-          </DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem onClick={this.onLogout} className="text-danger">
-            <i className="material-icons text-danger">&#xE879;</i> Logout
-          </DropdownItem>
-        </Collapse>
-      </NavItem>
+      <React.Fragment>
+        <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
+          <DropdownToggle caret tag={NavLink} className="text-nowrap p-3">
+            <span style={{ cursor: 'pointer' }} className="">{this.username}</span>
+          </DropdownToggle>
+          <Collapse tag={DropdownMenu} right small open={this.state.visible}>
+            <DropdownItem tag={Link} to="profile">
+              <i className="material-icons">&#xE7FD;</i> Profile
+            </DropdownItem>
+            <DropdownItem divider />
+            <DropdownItem onClick={this.onLogout} className="text-danger">
+              <i className="material-icons text-danger">&#xE879;</i> Logout
+            </DropdownItem>
+          </Collapse>
+        </NavItem>
+      </React.Fragment>
     );
   }
 }
