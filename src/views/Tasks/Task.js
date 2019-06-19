@@ -29,7 +29,10 @@ class Task extends React.Component {
   }
 
   isExpired(task) {
-    return !task.status && moment(moment(task.target_date).format('DD-MM-YYYY')).isBefore(moment().format('DD-MM-YYYY'))
+    const today = moment().format('DD-MM-YYYY')
+    const target = moment(task.target_date).format('DD-MM-YYYY')
+    const isExpired = today !== target && moment().isAfter(moment(task.target_date))
+    return !task.status && isExpired
   }
 
   render() {

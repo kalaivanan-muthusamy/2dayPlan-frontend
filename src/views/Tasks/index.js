@@ -66,9 +66,8 @@ class Tasks extends React.Component {
 
   getTodayTask (allTasks) {
     return allTasks.filter(task => {
-      const target_date = moment(task.target_date).format('DD-MM-YYYY')
-      const sameDate = moment(target_date).isSame(moment().format('DD-MM-YYYY'))
-      const expired = moment(target_date).isBefore(moment().format('DD-MM-YYYY'))
+      const sameDate = moment(task.target_date).format('DD-MM-YYYY') === moment().format('DD-MM-YYYY')
+      const expired = moment(task.target_date).isBefore(moment().format())
       return sameDate || (!task.status && expired)
     })
   }
