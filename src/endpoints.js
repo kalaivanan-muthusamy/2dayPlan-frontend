@@ -1,4 +1,4 @@
-const server = 'http://localhost:8001' || 'https://milestone-tasker-api.herokuapp.com'
+const server = process.env.NODE_ENV === 'production' ? process.env.APIEndpoint : 'http://localhost:8001'
 const endpoints = {
   register: `${server}/users/register`,
   login: `${server}/users/login`,
