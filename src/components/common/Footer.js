@@ -9,7 +9,7 @@ const Footer = () => {
         <Row>
           <Col md='4' sm='12' className='copyright'>
             <ul className='links'>
-              <li>Copyrights © 2019 <a href='http://www.2dayPlan.com'>2dayPlan.com</a></li>
+              <li>Copyrights © 2019 <a href='https://2dayPlan.com'>2dayPlan.com</a></li>
             </ul>
           </Col>
           <Col md='8' sm='12'>
