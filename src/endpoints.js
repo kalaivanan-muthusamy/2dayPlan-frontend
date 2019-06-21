@@ -1,4 +1,4 @@
-const server = process.env.NODE_ENV === 'production' ? process.env.APIEndpoint : 'http://localhost:8001'
+const server = process.env.REACT_APP_APIEndpoint || 'http://localhost:8001/api'
 const endpoints = {
   register: `${server}/users/register`,
   login: `${server}/users/login`,
