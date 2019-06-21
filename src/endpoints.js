@@ -1,5 +1,4 @@
 const server = process.env.REACT_APP_APIEndpoint || 'http://localhost:8001/api'
-console.warn(process.env);
 const endpoints = {
   register: `${server}/users/register`,
   login: `${server}/users/login`,
