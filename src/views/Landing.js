@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
+import { Link } from 'react-router-dom'
 import logo from '../images/logo.png'
 import Footer  from '../components/common/Footer'
 class Landing extends React.Component {
@@ -33,7 +34,7 @@ class Landing extends React.Component {
                     <h1>Simple & Powerful To-Do Application
                     for every day task management</h1><br/>
                     <p>Keep tracking your task in simple manner and just focus on what you need to complete exactly</p>
-                    <a href='/login' className='btn btn-lg btn-primary'>Start Now</a>
+                    <Link to='/login' className='btn btn-lg btn-primary'>Start Now</Link>
                 </Col>
               </Row>
               <div className='bs2'></div>

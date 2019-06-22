@@ -1,5 +1,6 @@
-import React from "react";
-import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react";
+import React from "react"
+import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react"
+import { Link } from 'react-router-dom'
 import endpoints from '../endpoints'
 import axios from 'axios'
 import logo from '../images/logo.png'
@@ -80,7 +81,7 @@ class Login extends React.Component {
                  </FormGroup>
                  <FormGroup>
                    <Button onClick={this.onLogin}>Login</Button>
-                   <a href='/register' className='float-right btn btn-link'>Register</a>
+                   <Link to='/register' className='float-right btn btn-link'>Register</Link>
                  </FormGroup>
                </Form>
                { error && <Alert theme='danger'>

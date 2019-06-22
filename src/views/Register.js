@@ -1,8 +1,10 @@
-import React from "react";
-import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react";
+import React from "react"
+import { Container, Row, Col, Card, CardBody, CardTitle, FormInput, Form, FormGroup, Button, Alert } from "shards-react"
+import { Link } from 'react-router-dom'
 import endpoints from '../endpoints'
 import axios from 'axios'
 import logo from '../images/logo.png'
+import { toast } from 'react-toastify'
 
 class Register extends React.Component {
 
@@ -29,6 +31,7 @@ class Register extends React.Component {
     }
     const result = await axios.post(endpoints.register, postData)
     if(result.status === 200 && result.data.status) {
+      toast.success('Registration successful. Please login!');
       this.props.history.push(`/login`)
     } else {
       this.setState({
@@ -75,7 +78,7 @@ class Register extends React.Component {
                  </FormGroup>
                  <FormGroup>
                    <Button onClick={this.onRegister}>Register</Button>
-                   <a href='/login' className='float-right btn btn-link'>Login</a>
+                   <Link to='/login' className='float-right btn btn-link'>Login</Link>
                  </FormGroup>
                </Form>
                { error && <Alert theme='danger'>
