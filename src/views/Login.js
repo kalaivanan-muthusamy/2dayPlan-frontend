@@ -21,22 +21,31 @@ class Login extends React.Component {
 
   async onLogin() {
     const { email, password } = this.state
-
     const loginUrl = endpoints.login
     const postData = {
       email: email,
       password: password
     }
-    const result = await axios.post(loginUrl, postData)
-    if(result.status === 200 && result.data.status) {
-      localStorage.setItem('access_token', result.data.access_token);
-      localStorage.setItem('2dayPlan-luname', result.data.user.name || 'My Account');
-      this.props.history.push(`/tasks`)
-    } else {
-      this.setState({
-        error: true,
-        errorMsg: result.data.message
-      })
+    try {
+      const result = await axios.post(loginUrl, postData)
+      if(result.status === 200) {
+        localStorage.setItem('access_token', result.data.access_token);
+        localStorage.setItem('2dayPlan-luname', result.data.user.name || 'My Account');
+        this.props.history.push(`/tasks`)
+      } else {
+        this.setState({
+          error: true,
+          errorMsg: result.data.message
+        })
+      }
+    } catch (error) {
+      const response = error.response || null
+      if(response) {
+        this.setState({
+          error: true,
+          errorMsg: response.data.message
+        })
+      }
     }
   }
 

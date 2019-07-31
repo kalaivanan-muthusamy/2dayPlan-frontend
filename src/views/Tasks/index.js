@@ -35,21 +35,18 @@ class Tasks extends React.Component {
     this.onTaskUpdate = this.onTaskUpdate.bind(this)
     this.onDeleteTask = this.onDeleteTask.bind(this)
 
-    axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token') || '';
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token') || '';
   }
 
   async componentDidMount() {
     try {
-        const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.get(endpoints.allTask, { headers: { Authorization: access_token }})
+        const response = await axios.get(endpoints.allTask)
         if(response.status === 200 && response.data.status) {
           const tasks = response.data.tasks
           const todayTasks = this.getTodayTask(tasks)
           this.setState({ allTasks: tasks, tasks: todayTasks })
         } else if(response.status === 401) {
           this.props.history.push('/login')
-        } else {
-          alert('Failed')
         }
     } catch (error) {
       const response = error.response || null
@@ -99,8 +96,7 @@ class Tasks extends React.Component {
   */
   async onNewTaskSubmit(task) {
     try {
-        const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.post(endpoints.addTask, task, { headers: { Authorization: access_token }})
+        const response = await axios.post(endpoints.addTask, task)
         if(response.status === 200 && response.data.status) {
           const task = response.data.task
           const allTasks = [ ...this.state.allTasks, task ]
@@ -148,8 +144,7 @@ class Tasks extends React.Component {
           task_id: task._id,
           status: task.status
         }
-        const access_token = localStorage.getItem('access_token') || '';
-        const response = await axios.put(endpoints.updateTask, updatedTask, { headers: { Authorization: access_token }})
+        const response = await axios.put(endpoints.updateTask, updatedTask)
         if(response.status === 200 && response.data.status) {
           !onlyStatus && this.toggleModel('editTaskModelOpen')
           // Replace this task in the allTask state object with updated value

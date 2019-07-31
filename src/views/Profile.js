@@ -27,7 +27,7 @@ class Profile extends React.Component {
     }
     const access_token = localStorage.getItem('access_token') || '';
     try {
-      const result = await axios.post(endpoints.updateUser, updatedData, { headers: { Authorization: access_token }})
+      const result = await axios.post(endpoints.updateUser, updatedData, { headers: { Authorization: 'Bearer ' + access_token }})
       if(result.status === 200 && result.data.status) {
         localStorage.setItem('2dayPlan-luname', name|| 'My Account');
         toast.success('Profile updated successfully');
@@ -46,12 +46,11 @@ class Profile extends React.Component {
   async componentDidMount() {
     const access_token = localStorage.getItem('access_token') || '';
     try {
-        const response = await axios.get(endpoints.userDetails, { headers: { Authorization: access_token }} )
+        const response = await axios.get(endpoints.userDetails, { headers: { Authorization: 'Bearer ' + access_token }} )
         if(response && response.data.status) {
           const user = response.data.user
           this.setState({ name: user.name, email: user.email, user })
         }
-
     }
     catch (error) {
       // If endpoint response error
